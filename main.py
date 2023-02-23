@@ -26,16 +26,9 @@ def awi(M,n,row,col) -> float:
     incrementrow = 10
     incrementcol = 10
 
-    if sectionrow*10 == row and row != 0:
-        incrementrow = 0
+    if row%10 == 0 and row != 0:
         sectionrow -= 1
-    if sectioncol*10 == col and col != 0:
-        incrementcol = 0
-        sectioncol -= 1
-    
-    if row == n-1:
-        sectionrow -= 1
-    if col == n-1:
+    if col%10 == 0 and col != 0:
         sectioncol -= 1
     
     sectioncol *= 10
