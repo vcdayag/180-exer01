@@ -11,10 +11,6 @@ def generateMatrix(n:int) -> list[list[float]]:
 
     return matrix
 
-# Federal Communications Commission (FCC) Interpolation
-def fcc(x1,y1,h1,x2,y2,h2,x,y) -> float:
-    return y1 + (x-x1)/(x2-x1) * (y2-y1)
-
 # Area Weighted Interpolation
 def awi(M,row,col) -> float:
     # index of the top left given point
