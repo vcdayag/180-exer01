@@ -26,11 +26,16 @@ def awi(M,n,row,col) -> float:
     incrementrow = 10
     incrementcol = 10
 
-    if sectionrow*10 == row and row != 0 and row != (n-1)*10:
+    if sectionrow*10 == row and row != 0:
         incrementrow = 0
         sectionrow -= 1
-    if sectioncol*10 == col and col != 0 and row != (n-1)*10:
+    if sectioncol*10 == col and col != 0:
         incrementcol = 0
+        sectioncol -= 1
+    
+    if row == n-1:
+        sectionrow -= 1
+    if col == n-1:
         sectioncol -= 1
     
     sectioncol *= 10
@@ -45,6 +50,9 @@ def awi(M,n,row,col) -> float:
     b = abs(sectionrow+incrementrow-row)*abs(sectioncol-col)
     # bottom right
     a = abs(sectionrow+incrementrow-row)*abs(sectioncol+incrementcol-col)
+
+    sectioncol //= 10
+    sectionrow //= 10
     
     A = M[sectionrow][sectioncol]
     B = M[sectionrow][sectioncol+incrementcol]
@@ -64,7 +72,8 @@ def terrain_inter(M:list[list[float]],n:int):
             M[row][col] = awi(M, n, row, col)
 
 if __name__ == "__main__":
-    n = int(input("value of n: ")) + 1
+    # n = int(input("value of n: ")) + 1
+    n = 11
     M = generateMatrix(n)
     # for x in M:
         # print(x)
