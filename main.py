@@ -36,7 +36,6 @@ def awi(M,n,row,col) -> float:
 
 
     # top left
-    # d = abs(sectionrow-row)*abs(sectioncol-col)
     d = (row-sectionrow) * (col-sectioncol)
     # top right
     c = (row-sectionrow) * (sectioncol+incrementcol-col)
@@ -52,7 +51,6 @@ def awi(M,n,row,col) -> float:
     B = M[sectionrow][sectioncol+incrementcol]
     C = M[sectionrow+incrementrow][sectioncol]
     D = M[sectionrow+incrementrow][sectioncol+incrementcol]
-    print(a,b,c,d)
 
     return (a*A + b*B + c*C + d*D) / (a+b+c+d)
 
@@ -60,9 +58,7 @@ def terrain_inter(M:list[list[float]],n:int):
     for row in range(n):
         for col in range(n):
             if row%10 == 0 and col%10 == 0:
-                print("skip",row,col)
                 continue
-            print(row,col)
             M[row][col] = awi(M, n, row, col)
     return M
 
@@ -81,15 +77,10 @@ if __name__ == "__main__":
     # n = int(input("value of n: ")) + 1
     n = 11
     M = generateMatrix(n)
-    # for x in M:
-        # print(x)
 
     time_before = time.time()
     output = terrain_inter(M,n)
     time_after = time.time()
-
-    for x in M:
-        print(x)
 
     time_elapsed = time_after - time_before
 
