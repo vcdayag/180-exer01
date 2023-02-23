@@ -57,8 +57,6 @@ def awi(M,n,row,col) -> float:
 def terrain_inter(M:list[list[float]],n:int):
     for row in range(n):
         for col in range(n):
-            if row%10 == 0 and col%10 == 0:
-                continue
             M[row][col] = awi(M, n, row, col)
     return M
 
