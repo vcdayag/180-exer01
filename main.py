@@ -1,6 +1,8 @@
 import random
 import time
 
+
+# create a 2d list as a matrix
 def generateMatrix(n:int) -> list[list[float]]:
 
     matrix = [ [0 for y in range(n)] for x in range(n)]
@@ -19,7 +21,8 @@ def generateMatrix(n:int) -> list[list[float]]:
 
 # Area Weighted Interpolation
 def awi(M,n,row,col) -> float:
-    # index of the top left given point
+    # get the index of the top left lower resolution point
+    
     sectionrow = row//10
     sectioncol = col//10
 
@@ -54,6 +57,7 @@ def awi(M,n,row,col) -> float:
 
     return (a*A + b*B + c*C + d*D) / (a+b+c+d)
 
+# Interpolate the given matrix
 def terrain_inter(M:list[list[float]],n:int):
     for row in range(n):
         for col in range(n):
