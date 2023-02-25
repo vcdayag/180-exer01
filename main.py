@@ -4,9 +4,10 @@ import time
 
 # create a 2d list as a matrix
 def generateMatrix(n: int) -> list[list[float]]:
-
+    # generate a matrix with starting values of 0
     matrix = [[0 for y in range(n)] for x in range(n)]
-
+    
+    # randomly generate a value from 1 to 1000 for points with index divisible by 10
     for x in range(n // 10 + 1):
         for y in range(n // 10 + 1):
             matrix[x * 10][y * 10] = random.randint(1, 1000)
@@ -37,6 +38,8 @@ def awi(M, n, row, col) -> float:
     sectioncol *= 10
     sectionrow *= 10
 
+    # get the weighted area of the lower resolution points
+
     # top left
     d = (row - sectionrow) * (col - sectioncol)
     # top right
@@ -48,6 +51,8 @@ def awi(M, n, row, col) -> float:
 
     sectioncol //= 10
     sectionrow //= 10
+
+    # get the values of the lower resolution points
 
     A = M[sectionrow][sectioncol]
     B = M[sectionrow][sectioncol + incrementcol]
