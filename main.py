@@ -21,7 +21,7 @@ def generateMatrix(n: int) -> list[list[float]]:
 
 
 # Area Weighted Interpolation
-def awi(M, n, row, col) -> float:
+def awi(M, row, col) -> float:
     # get the index of the top left lower resolution point
 
     sectionrow = row // 10
@@ -63,10 +63,10 @@ def awi(M, n, row, col) -> float:
 
 
 # Interpolate the given matrix
-def terrain_inter(M: list[list[float]], n: int):
+def terrain_inter(M: list[list[float]]):
     for row in range(n):
         for col in range(n):
-            M[row][col] = awi(M, n, row, col)
+            M[row][col] = awi(M, row, col)
     return M
 
 
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     M = generateMatrix(n)
 
     time_before = time.time()
-    output = terrain_inter(M, n)
+    output = terrain_inter(M)
     time_after = time.time()
 
     time_elapsed = time_after - time_before
