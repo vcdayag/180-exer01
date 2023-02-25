@@ -22,42 +22,40 @@ def generateMatrix(n: int) -> list[list[float]]:
 
 # Area Weighted Interpolation
 def awi(M, row, col) -> float:
-    # get the index of the top left lower resolution point
-
-    sectionrow = row // 10
-    sectioncol = col // 10
-
     incrementrow = 10
     incrementcol = 10
+    
+    # get the coordinates of the nearest lower resolution point
+    LRPOINTrow = row // 10 * 10
+    LRPOINTcol = col // 10 * 10
+
+    # print(row,col)
+
+    # check if the resolution point is the top left
+    # if not update the LRPOINTrow or LRPOINTcol accordingly
 
     if row % 10 == 0 and row != 0:
-        sectionrow -= 1
+        LRPOINTrow -= 10
     if col % 10 == 0 and col != 0:
-        sectioncol -= 1
-
-    sectioncol *= 10
-    sectionrow *= 10
+        LRPOINTcol -= 10
 
     # get the weighted area of the lower resolution points
 
     # top left
-    d = (row - sectionrow) * (col - sectioncol)
+    d = (row - LRPOINTrow) * (col - LRPOINTcol)
     # top right
-    c = (row - sectionrow) * (sectioncol + incrementcol - col)
+    c = (row - LRPOINTrow) * (LRPOINTcol + incrementcol - col)
     # bottom left
-    b = (sectionrow + incrementrow - row) * (col - sectioncol)
+    b = (LRPOINTrow + incrementrow - row) * (col - LRPOINTcol)
     # bottom right
-    a = (sectionrow + incrementrow - row) * (sectioncol + incrementcol - col)
-
-    sectioncol //= 10
-    sectionrow //= 10
+    a = (LRPOINTrow + incrementrow - row) * (LRPOINTcol + incrementcol - col)
 
     # get the values of the lower resolution points
 
-    A = M[sectionrow][sectioncol]
-    B = M[sectionrow][sectioncol + incrementcol]
-    C = M[sectionrow + incrementrow][sectioncol]
-    D = M[sectionrow + incrementrow][sectioncol + incrementcol]
+    A = M[LRPOINTrow][LRPOINTcol]
+    B = M[LRPOINTrow][LRPOINTcol + incrementcol]
+    C = M[LRPOINTrow + incrementrow][LRPOINTcol]
+    D = M[LRPOINTrow + incrementrow][LRPOINTcol + incrementcol]
 
     return (a * A + b * B + c * C + d * D) / (a + b + c + d)
 
@@ -84,6 +82,7 @@ if __name__ == "__main__":
         [65.0, 64.4, 63.8, 63.2, 62.6, 62.0, 61.4, 60.8, 60.2, 59.6, 59.0],
         [50, 46.0, 42.0, 38.0, 34.0, 30.0, 26.0, 22.0, 18.0, 14.0, 10],
     ]
+    
     # n = int(input("value of n: ")) + 1
     n = 11
     M = generateMatrix(n)
