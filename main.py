@@ -6,7 +6,7 @@ import time
 def generateMatrix(n: int) -> list[list[float]]:
     # generate a matrix with starting values of 0
     matrix = [[0 for y in range(n)] for x in range(n)]
-    
+
     # randomly generate a value from 1 to 1000 for points with index divisible by 10
     for x in range(n // 10 + 1):
         for y in range(n // 10 + 1):
@@ -63,7 +63,7 @@ def awi(M, row, col) -> float:
 
 
 # Interpolate the given matrix
-def terrain_inter(M: list[list[float]]):
+def terrain_inter(M: list[list[float]], n: int):
     for row in range(n):
         for col in range(n):
             M[row][col] = awi(M, row, col)
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     M = generateMatrix(n)
 
     time_before = time.time()
-    output = terrain_inter(M)
+    output = terrain_inter(M, n)
     time_after = time.time()
 
     time_elapsed = time_after - time_before
