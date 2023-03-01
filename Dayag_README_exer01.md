@@ -4,9 +4,10 @@ Van Paul Angelo C. Dayag
 CMSC 180 T6L
 
 ## Installation
-
-install atleast Python 3.10
-
+Programming language: Python
+        Dependencies: atleast Python 3.10
+   main program file: main.py
+   
 ## Run
 
 python3 main.py
