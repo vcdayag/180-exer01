@@ -15,49 +15,43 @@ def generateMatrix(n: int) -> list[list[float]]:
     return matrix
 
 
-# Area Weighted Interpolation
-def awi(M, row, col) -> float:
-    incrementrow = 10
-    incrementcol = 10
-
-    # get the coordinates of the nearest lower resolution point
-    LRPOINTrow = row // 10 * 10
-    LRPOINTcol = col // 10 * 10
-
-    # check if the resolution point is the top left
-    # if not update the LRPOINTrow or LRPOINTcol accordingly
-
-    if row % 10 == 0 and row != 0:
-        LRPOINTrow -= 10
-    if col % 10 == 0 and col != 0:
-        LRPOINTcol -= 10
-
-    # get the weighted area of the lower resolution points
-
-    # top left
-    d = (row - LRPOINTrow) * (col - LRPOINTcol)
-    # top right
-    c = (row - LRPOINTrow) * (LRPOINTcol + incrementcol - col)
-    # bottom left
-    b = (LRPOINTrow + incrementrow - row) * (col - LRPOINTcol)
-    # bottom right
-    a = (LRPOINTrow + incrementrow - row) * (LRPOINTcol + incrementcol - col)
-
-    # get the values of the lower resolution points
-
-    A = M[LRPOINTrow][LRPOINTcol]
-    B = M[LRPOINTrow][LRPOINTcol + incrementcol]
-    C = M[LRPOINTrow + incrementrow][LRPOINTcol]
-    D = M[LRPOINTrow + incrementrow][LRPOINTcol + incrementcol]
-
-    return (a * A + b * B + c * C + d * D) / (a + b + c + d)
-
-
 # Interpolate the given matrix
 def terrain_inter(M: list[list[float]], n: int):
     for row in range(n):
+        # get the coordinates of the nearest lower resolution point
+        LRPOINTrow = row // 10 * 10
+        # check if the resolution point is the top left
+        # if not update the LRPOINTrow or LRPOINTcol accordingly
+        if row % 10 == 0 and row != 0:
+            LRPOINTrow -= 10
         for col in range(n):
-            M[row][col] = awi(M, row, col)
+            if col % 10 == 0:
+                # get the coordinates of the nearest lower resolution point
+                LRPOINTcol = col // 10 * 10
+                # check if the resolution point is the top left
+                # if not update the LRPOINTrow or LRPOINTcol accordingly         
+                if col != 0:
+                    LRPOINTcol -= 10
+
+            # get the weighted area of the lower resolution points
+
+            # top left
+            d = (row - LRPOINTrow) * (col - LRPOINTcol)
+            # top right
+            c = (row - LRPOINTrow) * (LRPOINTcol + 10 - col)
+            # bottom left
+            b = (LRPOINTrow + 10 - row) * (col - LRPOINTcol)
+            # bottom right
+            a = (LRPOINTrow + 10 - row) * (LRPOINTcol + 10 - col)
+
+            # get the values of the lower resolution points
+
+            A = M[LRPOINTrow][LRPOINTcol]
+            B = M[LRPOINTrow][LRPOINTcol + 10]
+            C = M[LRPOINTrow + 10][LRPOINTcol]
+            D = M[LRPOINTrow + 10][LRPOINTcol + 10]
+
+            M[row][col] = (a * A + b * B + c * C + d * D) / 100
     return M
 
 
