@@ -57,7 +57,8 @@ def terrain_inter(M: list[list[float]], n: int) -> list[list[float]]:
 
 
 if __name__ == "__main__":
-    n = int(input("value of n: ")) + 1
+    import sys
+    n = int(sys.argv[1]) + 1
     M = generateMatrix(n)
 
     time_before = time.time()
