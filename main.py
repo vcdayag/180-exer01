@@ -88,14 +88,15 @@ def mulithreading(submatrices, n, t):
         rangeRow = (n // 10) // t
         lowwerbound = 0
         upperbound = lowwerbound + (rangeRow * 10) + 1
-        futures = {
-            executor.submit(terrain_inter, submatrix, n, (lowwerbound, upperbound))
-            for submatrix in submatrices
-        }
+
+        args = [(submatrix, n, (lowwerbound, upperbound)) for submatrix in submatrices]
+        futures = []
+        
+        for i in executor.map(lambda p:terrain_inter(*p),args):
+            futures.append(i)
 
         output = []
-        for idx,future in enumerate(as_completed(futures)):
-            threadGenerated = future.result()
+        for idx, threadGenerated in enumerate(futures):
             if idx != 0:
                 threadGenerated.pop(0)
             for x in threadGenerated:
