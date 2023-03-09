@@ -10,7 +10,8 @@ def generateMatrix(n: int) -> list[list[float]]:
     # randomly generate a value from 1 to 1000 for points with index divisible by 10
     for x in range(n // 10 + 1):
         for y in range(n // 10 + 1):
-            matrix[x * 10][y * 10] = random.randint(1, 1000)
+            # matrix[x * 10][y * 10] = random.randint(1, 1000)
+            matrix[x * 10][y * 10] = 65+x+y
 
     return matrix
 
@@ -35,9 +36,12 @@ def terrain_inter(
                 # if not update the LRPOINTrow or LRPOINTcol accordingly
                 if col != 0:
                     LRPOINTcol -= 10
+                
+                if row % 10 == 0:
+                    continue
 
             # get the weighted area of the lower resolution points
-            index = row % 11 + col % 11
+            index = row % 10 + col % 10
             # top left
             d = weights[index][0]
             # top right
@@ -88,11 +92,16 @@ def mulithreading(submatrices, n, t):
             executor.submit(terrain_inter, submatrix, n, (lowwerbound, upperbound))
             for submatrix in submatrices
         }
-        for future in as_completed(futures):
-            # try:
-            data = future.result()
-        # except Exception as exc:
-        # print(exc)
+
+        output = []
+        for idx,future in enumerate(as_completed(futures)):
+            threadGenerated = future.result()
+            if idx != 0:
+                threadGenerated.pop(0)
+            for x in threadGenerated:
+                print(x)
+            output.extend(threadGenerated)
+        return output
 
 
 if __name__ == "__main__":
@@ -105,11 +114,18 @@ if __name__ == "__main__":
     M = generateMatrix(n)
 
     submatrices = generateSubmatrices(M, n, t)
-
+    # for x in submatrices:
+    #     for y in x:
+    #         print(y)
     time_before = time.time()
-    mulithreading(submatrices, n, t)
+    output = mulithreading(submatrices, n, t)
     time_after = time.time()
 
     time_elapsed = time_after - time_before
 
-    print(f"Time elapsed: {time_elapsed} seconds")
+    # print(f"Time elapsed: {time_elapsed} seconds")
+
+    # for x in output:
+    #     print(x)
+    
+    
