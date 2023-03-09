@@ -1,11 +1,11 @@
 import random
 import time
-
+from array import array
 
 # create a 2d list as a matrix
 def generateMatrix(n: int) -> list[list[float]]:
     # generate a matrix with starting values of 0
-    matrix = [[0 for y in range(n)] for x in range(n)]
+    matrix = [array("d",range(n)) for x in range(n)]
 
     # randomly generate a value from 1 to 1000 for points with index divisible by 10
     for x in range(n // 10 + 1):
@@ -33,9 +33,12 @@ def terrain_inter(M: list[list[float]], n: int) -> list[list[float]]:
                 # if not update the LRPOINTrow or LRPOINTcol accordingly
                 if col != 0:
                     LRPOINTcol -= 10
+                
+                if row % 10 == 0:
+                    continue
 
             # get the weighted area of the lower resolution points
-            index = row % 11 + col % 11
+            index = row % 10 + col % 10
             # top left
             d = weights[index][0]
             # top right
@@ -68,3 +71,5 @@ if __name__ == "__main__":
     time_elapsed = time_after - time_before
 
     print(f"Time elapsed: {time_elapsed} seconds")
+
+    print(output)
