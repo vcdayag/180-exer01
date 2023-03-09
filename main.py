@@ -88,6 +88,9 @@ def mulithreading(submatrices,n,t):
 if __name__ == "__main__":
     import sys
     n = int(sys.argv[1]) + 1
+    # number of threads
+    t = int(sys.argv[2])
+    
     M = generateMatrix(n)
 
     time_before = time.time()
