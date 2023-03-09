@@ -71,7 +71,7 @@ def generateSubmatrices(M: list[list[float]], n: int, t: int):
         upperbound = lowwerbound + (rangeRow * 10) + 1
 
         for row in range(lowwerbound, upperbound):
-            onematrix.append(M[row][:])
+            onematrix.append(M[row])
         submatrices.append(onematrix[:])
 
     return submatrices
