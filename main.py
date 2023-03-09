@@ -5,14 +5,12 @@ from array import array
 # create a 2d list as a matrix
 def generateMatrix(n: int) -> list[list[float]]:
     # generate a matrix with starting values of 0
-    # matrix = [[0 for y in range(n)] for x in range(n)]
     matrix = [array("d",range(n)) for x in range(n)]
 
     # randomly generate a value from 1 to 1000 for points with index divisible by 10
     for x in range(n // 10 + 1):
         for y in range(n // 10 + 1):
             matrix[x * 10][y * 10] = random.randint(1, 1000)
-            # matrix[x * 10][y * 10] = 65 + x + y
 
     return matrix
 
@@ -77,7 +75,7 @@ def generateSubmatrices(M: list[list[float]], n: int, t: int) -> list[list[float
     return submatrices
 
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 
 
 def mulithreading(submatrices: list[list[list[float]]], n: int, t: int) -> list[list[float]]:
