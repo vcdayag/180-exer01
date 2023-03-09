@@ -1,11 +1,12 @@
 import random
 import time
-
+from array import array
 
 # create a 2d list as a matrix
 def generateMatrix(n: int) -> list[list[float]]:
     # generate a matrix with starting values of 0
-    matrix = [[0 for y in range(n)] for x in range(n)]
+    # matrix = [[0 for y in range(n)] for x in range(n)]
+    matrix = [array("d",range(n)) for x in range(n)]
 
     # randomly generate a value from 1 to 1000 for points with index divisible by 10
     for x in range(n // 10 + 1):
