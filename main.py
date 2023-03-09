@@ -65,17 +65,15 @@ def terrain_inter(
 def generateSubmatrices(M: list[list[float]], n: int, t: int):
     submatrices = []
     rangeRow = (n // 10) // t
-    # print(len(M))
-    # print(rangeRow)
+    
     for threads in range(t):
         onematrix = []
         lowwerbound = (threads * rangeRow) * 10
         upperbound = lowwerbound + (rangeRow * 10) + 1
-        # print("lower, upper",lowwerbound, upperbound)
+
         for row in range(lowwerbound, upperbound):
             onematrix.append(M[row][:])
         submatrices.append(onematrix[:])
-        # print(len(onematrix))
 
     return submatrices
 
@@ -99,8 +97,6 @@ def mulithreading(submatrices, n, t):
         for idx, threadGenerated in enumerate(futures):
             if idx != 0:
                 threadGenerated.pop(0)
-            for x in threadGenerated:
-                print(x)
             output.extend(threadGenerated)
         return output
 
@@ -109,24 +105,18 @@ if __name__ == "__main__":
     import sys
 
     n = int(sys.argv[1]) + 1
+
     # number of threads
     t = int(sys.argv[2])
 
     M = generateMatrix(n)
 
     submatrices = generateSubmatrices(M, n, t)
-    # for x in submatrices:
-    #     for y in x:
-    #         print(y)
+
     time_before = time.time()
     output = mulithreading(submatrices, n, t)
     time_after = time.time()
 
     time_elapsed = time_after - time_before
 
-    # print(f"Time elapsed: {time_elapsed} seconds")
-
-    # for x in output:
-    #     print(x)
-    
-    
+    print(f"Time elapsed: {time_elapsed} seconds")
