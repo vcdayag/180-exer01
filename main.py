@@ -61,7 +61,7 @@ def terrain_inter(M: list[list[float]], n: int, rowBounds: tuple) -> list[list[f
     return M
 
 
-def generateSubmatrices(M: list[list[float]], n: int, t: int):
+def generateSubmatrices(M: list[list[float]], n: int, t: int) -> list[list[float]]:
     submatrices = []
     rangeRow = (n // 10) // t
 
@@ -80,7 +80,7 @@ def generateSubmatrices(M: list[list[float]], n: int, t: int):
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
-def mulithreading(submatrices, n, t):
+def mulithreading(submatrices: list[list[list[float]]], n: int, t: int) -> list[list[float]]:
     with ThreadPoolExecutor(max_workers=t) as executor:
         rangeRow = (n // 10) // t
         lowwerbound = 0
