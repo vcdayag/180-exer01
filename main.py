@@ -55,6 +55,22 @@ def terrain_inter(M: list[list[float]], n: int) -> list[list[float]]:
             M[row][col] = (a * A + b * B + c * C + d * D) / 100
     return M
 
+def generateSubmatrices(M:list[list[float]],n:int,t:int):
+    submatrices = []
+    rangeRow = (n//10)//t
+    # print(len(M))
+    # print(rangeRow)
+    for threads in range(t):
+        onematrix = []
+        lowwerbound = (threads*rangeRow) * 10
+        upperbound = lowwerbound + (rangeRow * 10) + 1
+        # print("lower, upper",lowwerbound, upperbound)
+        for row in range(lowwerbound,upperbound):
+            onematrix.append(M[row][:])
+        submatrices.append(onematrix[:])
+        # print(len(onematrix))
+
+    return submatrices
 
 if __name__ == "__main__":
     import sys
