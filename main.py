@@ -72,6 +72,19 @@ def generateSubmatrices(M:list[list[float]],n:int,t:int):
 
     return submatrices
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+def mulithreading(submatrices,n,t):
+    with ThreadPoolExecutor(max_workers=t) as executor:
+        rangeRow = (n//10)//t
+        lowwerbound = 0
+        upperbound = lowwerbound + (rangeRow * 10) + 1
+        futures = {executor.submit(terrain_inter,submatrix,n,(lowwerbound,upperbound)) for submatrix in submatrices}
+        for future in as_completed(futures):
+            # try:
+                data = future.result()
+            # except Exception as exc:
+                # print(exc)
+
 if __name__ == "__main__":
     import sys
     n = int(sys.argv[1]) + 1
