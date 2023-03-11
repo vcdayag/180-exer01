@@ -10,7 +10,8 @@ def generateMatrix(n: int) -> list[list[float]]:
     # randomly generate a value from 1 to 1000 for points with index divisible by 10
     for x in range(n // 10 + 1):
         for y in range(n // 10 + 1):
-            matrix[x * 10][y * 10] = random.randint(1, 1000)
+            # matrix[x * 10][y * 10] = random.randint(1, 1000)
+            matrix[x * 10][y * 10] = 420+x+y
 
     return matrix
 
