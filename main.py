@@ -68,9 +68,10 @@ def generateSubmatrices(M: list[list[float]], n: int, t: int) -> list[list[float
         lowwerbound = (threads * rangeRow) * 10
         upperbound = lowwerbound + (rangeRow * 10) + 1
 
-        for row in range(lowwerbound, upperbound):
-            onematrix.append(M[row])
-        submatrices.append(onematrix[:])
+        submatrices.append(M[lowwerbound:upperbound])
+        # for row in range(lowwerbound, upperbound):
+            # onematrix.append(M[row])
+        # submatrices.append(onematrix[:])
 
     return submatrices
 
@@ -84,7 +85,7 @@ def mulithreading(submatrices: list[list[list[float]]], n: int, t: int) -> list[
         lowwerbound = 0
         upperbound = lowwerbound + (rangeRow * 10) + 1
 
-        args = [(submatrix, n, (lowwerbound, upperbound)) for submatrix in submatrices]
+        args = ((submatrix, n, (lowwerbound, upperbound)) for submatrix in submatrices)
         futures = []
 
         for i in executor.map(lambda p: terrain_inter(*p), args):
