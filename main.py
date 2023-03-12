@@ -38,16 +38,14 @@ def terrain_inter(M: list[list[float]], n: int, rowBounds: tuple) -> list[list[f
                 if row % 10 == 0:
                     continue
 
+                if row % 10 == 0:
+                    continue
+
             # get the weighted area of the lower resolution points
             index = row % 10 + col % 10
-            # top left
-            d = weights[index][0]
-            # top right
-            c = weights[index][1]
-            # bottom left
-            b = weights[index][2]
-            # bottom right
-            a = weights[index][3]
+            # unpack the weights tuple into their respective variables
+            # top left, top right, bottom left, bottom right
+            d,c,b,a = weights[index]
 
             # get the values of the lower resolution points
             A = M[LRPOINTrow][LRPOINTcol]
@@ -57,6 +55,7 @@ def terrain_inter(M: list[list[float]], n: int, rowBounds: tuple) -> list[list[f
 
             # get interpolation using Area Weighted Interpolation
             M[row][col] = (a * A + b * B + c * C + d * D) / 100
+
     return M
 
 
