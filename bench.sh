@@ -7,7 +7,7 @@ array=( 100 200 300 400 500 600 700 800 900 1000 2000 4000 8000 16000 20000 )
 
 # create directory for benchmark results
 benchdir="bench"
-mkdir "$benchdir"
+mkdir -p "$benchdir"
 
 # check if there is an arguement
 if [ "$1" ]; then
