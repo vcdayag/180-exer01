@@ -4,39 +4,31 @@ branch=$(git symbolic-ref --short HEAD)
 commit=$(git rev-parse --short HEAD)
 array=( 100 200 300 400 500 600 700 800 900 1000 2000 4000 8000 16000 20000 )
 
-# create file
-
-
-
 # check if there is an arguement
 if [ "$1" ]; then
-    # file_txt="${branch}_${commit}_$1.txt"
-    # touch $file_txt
-    # rm $file_txt
-    
+    # create file
     file_csv="${branch}_${commit}_$1.csv"
-    touch $file_csv
-    rm $file_csv
+    rm "$file_csv"
+    touch "$file_csv"
 
     for i in "${array[@]}"
     do
-        echo $i
-        # echo $i >> $file_txt
-        echo -n $i >> $file_csv
+        echo "$i"
+        echo -n "$i" >> "$file_csv"
 
         sum=0
-        for z in {1..3}
+        for _ in {1..3}
         do
-            output=$(python3 ./main.py $i $1)
-            echo $output
-            # echo $output >> $file_txt
-            read -a arr <<< "$output"
-            echo -n ",${arr[2]}" >> $file_csv
+            output=$(python3 ./main.py "$i" "$1")
+            echo "$output"
+            read -ra arr <<< "$output"
+            
+            echo -n ",${arr[2]}" >> "$file_csv"
             sum=$(bc -l <<< "${arr[2]} + ${sum}")
         done
         avg="$(bc -l <<< "${sum} / 3")"
-        echo $avg
-        echo -n ",$avg" >> $file_csv
-        echo >> $file_csv
+        echo "$avg"
+        echo -n ",$avg" >> "$file_csv"
+        echo >> "$file_csv"
     done
 fi
