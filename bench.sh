@@ -4,10 +4,14 @@ branch=$(git symbolic-ref --short HEAD)
 commit=$(git rev-parse --short HEAD)
 array=( 100 200 300 400 500 600 700 800 900 1000 2000 4000 8000 16000 20000 )
 
+# create directory for benchmark results
+benchdir=".bench"
+mkdir "$benchdir"
+
 # check if there is an arguement
 if [ "$1" ]; then
     # create file
-    file_csv="${branch}_${commit}_$1.csv"
+    file_csv="${benchdir}/${branch}_${commit}_$1.csv"
     rm "$file_csv"
     touch "$file_csv"
 
