@@ -4,7 +4,7 @@ import sys
 import pickle
 
 host = '127.0.0.1'
-port = 5058
+port = 5060
 
 # size of matrix
 n = int(sys.argv[1]) + 1
@@ -27,10 +27,4 @@ with conn:
             break
         print(data.decode())
         mat = interpolation.generateCornersMatrix(n)
-        matbytes = str(mat)
-        counter = 0
-        
-        print(matbytes)
-        # conn.sendall(str(len(matbytes)).encode())
-        # conn.sendall(matbytes)
-        # conn.sendall(pickle.dumps(mat))
+        conn.sendall(pickle.dumps(mat,protocol=pickle.HIGHEST_PROTOCOL))
