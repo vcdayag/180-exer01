@@ -1,30 +1,36 @@
 import socket
 import interpolation
 import sys
+import pickle
 
 host = '127.0.0.1'
-# port = 5050
+port = 5058
 
+# size of matrix
 n = int(sys.argv[1]) + 1
-port = int(sys.argv[2])
+# input port
+# port = int(sys.argv[2])
 # number of threads
 status = int(sys.argv[3])
 
 s = socket.socket()
 s.bind((host,port))
-s.listen()
+s.listen(5)
 conn, addr = s.accept()
 
 with conn:
     print("Connected by", addr)
     
     while True:
-        data = conn.recv(64000)
+        data = conn.recv(4096)
         if not data:
             break
         print(data.decode())
-        print("na send all")
-        mat = interpolation.generateMatrix(n)
+        mat = interpolation.generateCornersMatrix(n)
+        matbytes = str(mat)
+        counter = 0
         
-        conn.sendall(str(mat).encode())
-        print(mat)
+        print(matbytes)
+        # conn.sendall(str(len(matbytes)).encode())
+        # conn.sendall(matbytes)
+        # conn.sendall(pickle.dumps(mat))

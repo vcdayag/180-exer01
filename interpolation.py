@@ -2,6 +2,34 @@ import random
 import time
 from array import array
 
+# EXER 04 FUNCTIONS
+
+# create a 2d list of corner values
+def generateCornersMatrix(n: int)-> list[list[float]]:
+    # generate a matrix with starting values of 0
+    matrix = [array("d",[0]*n) for x in range(n)]
+    matrixCorners = []
+
+    # randomly generate a value from 1 to 1000 for points with index divisible by 10
+    for row in range(n // 10 + 1):
+        rowcorners = []
+        for col in range(n // 10 + 1):
+            randomValue = random.randint(1, 1000)
+            matrix[row * 10][col * 10] = randomValue
+            rowcorners.append(randomValue)
+        matrixCorners.append(rowcorners)
+
+    return matrixCorners
+
+def buildMatrixFromCorners(CornerMatrix: list[list[float]]) -> list[list[float]] :
+    n = (len(CornerMatrix[0]) -1) * 10 + 1
+    matrix = [array("d",[0]*n) for x in range(n)]
+    
+    for row in range(n // 10 + 1):
+        for col in range(n // 10 + 1):
+            matrix[row * 10][col * 10] = CornerMatrix[row][col]
+    return matrix
+
 # create a 2d list as a matrix
 def generateMatrix(n: int) -> list[list[float]]:
     # generate a matrix with starting values of 0
@@ -14,7 +42,6 @@ def generateMatrix(n: int) -> list[list[float]]:
             # matrix[x * 10][y * 10] = 420+x+y
 
     return matrix
-
 
 # Interpolate the given matrix
 def terrain_inter(M: list[list[float]], n: int, rowBounds: tuple) -> list[list[float]]:
